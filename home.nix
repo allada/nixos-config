@@ -39,6 +39,13 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
+    ".config/Code/User/settings.json".text = ''
+      {
+        "editor.inlayHints.enabled": "offUnlessPressed",
+        "editor.tabSize": 2
+      }
+    '';
+
     ".vimrc".text = ''
       syntax on
       set mouse-=a
@@ -73,6 +80,7 @@
   #
   home.sessionVariables = {
     # EDITOR = "emacs";
+    PKG_CONFIG_PATH = "/run/current-system/sw/lib/pkgconfig";
   };
 
   # Let Home Manager install and manage itself.

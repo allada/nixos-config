@@ -13,6 +13,18 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  services.envfs.enable = true;
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    openssl
+    xorg.libX11
+    xorg.libXcursor
+    xorg.libxcb
+    xorg.libXi
+    libxkbcommon
+    libz
+  ];
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -114,25 +126,51 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  virtualisation.docker.enable = true;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    pkg-config
+    fuse
+    redisinsight
+    fuse3
+    gcc14
+    go
+    docker
+    yarn
+    nvidia-docker
+    bazelisk
+    awscli2
     slack
     terminator
     google-chrome
+    spotify
     wget
     git
     vim
+    pnpm
+    nodejs_22
     htop
     nmon
     nload
     iftop
+    mktemp
+    rustup
+    kubectl
+    killall
+    rocmPackages.llvm.clang
     (vscode-with-extensions.override {
       vscodeExtensions = with vscode-extensions; [
+        github.copilot
         bbenoist.nix
         ms-python.python
         ms-azuretools.vscode-docker
         ms-vscode-remote.remote-ssh
+        rust-lang.rust-analyzer
+        golang.go
+        vue.volar
+        bazelbuild.vscode-bazel
       ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
         {
           name = "remote-ssh-edit";
