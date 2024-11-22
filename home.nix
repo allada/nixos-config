@@ -39,10 +39,17 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
+    ".bashrc".text = ''
+      alias bazel=bazelisk
+      alias k=kubectl
+    '';
     ".config/Code/User/settings.json".text = ''
       {
         "editor.inlayHints.enabled": "offUnlessPressed",
-        "editor.tabSize": 2
+        "editor.tabSize": 2,
+        "files.associations": {
+          "*.json5": "jsonc"
+        }
       }
     '';
 

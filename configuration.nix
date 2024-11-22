@@ -81,7 +81,7 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
 
   # Enable bluetooth.
   hardware.bluetooth.enable = true;
@@ -131,16 +131,23 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    jq
     pkg-config
+    kubectx
+    kubernetes-helm
     fuse
     redisinsight
     fuse3
     gcc14
+    pre-commit
     go
     docker
     yarn
+    openssl
     nvidia-docker
+    bun
     bazelisk
+    bazel-buildtools
     awscli2
     slack
     terminator
@@ -150,6 +157,7 @@
     git
     vim
     pnpm
+    python3Minimal
     nodejs_22
     htop
     nmon
@@ -171,6 +179,9 @@
         golang.go
         vue.volar
         bazelbuild.vscode-bazel
+	ms-vscode-remote.remote-containers
+        ms-kubernetes-tools.vscode-kubernetes-tools
+        redhat.vscode-yaml
       ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
         {
           name = "remote-ssh-edit";
@@ -178,9 +189,17 @@
           version = "0.47.2";
           sha256 = "1hp6gjh4xp2m1xlm1jsdzxw9d8frkiidhph6nvl24d0h8z34w49g";
         }
+        {
+          name = "proto";
+          publisher = "peterj";
+          version = "0.0.4";
+          sha256 = "O8z9VPrR/i83SeT1cF6pFiFQNLu25NmQSu9NAyjoLww=";
+        }
       ];
     })
   ];
+
+  programs.fuse.userAllowOther = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
