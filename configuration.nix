@@ -140,6 +140,7 @@
     docker
     yarn
     nvidia-docker
+    bun
     bazelisk
     awscli2
     slack
@@ -177,6 +178,12 @@
           publisher = "ms-vscode-remote";
           version = "0.47.2";
           sha256 = "1hp6gjh4xp2m1xlm1jsdzxw9d8frkiidhph6nvl24d0h8z34w49g";
+        }
+        {
+          name = "proto";
+          publisher = "peterj";
+          version = "0.0.4";
+          sha256 = "O8z9VPrR/i83SeT1cF6pFiFQNLu25NmQSu9NAyjoLww=";
         }
       ];
     })
