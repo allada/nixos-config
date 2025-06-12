@@ -8,7 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      inputs.home-manager.nixosModules.default
+      inputs.home-manager.nixosModules.home-manager
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -81,7 +81,7 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
+  hardware.pulseaudio.enable = false;
 
   # Enable bluetooth.
   hardware.bluetooth.enable = true;
