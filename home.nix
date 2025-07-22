@@ -42,6 +42,8 @@
     ".bashrc".text = ''
       alias bazel=bazelisk
       alias k=kubectl
+      export PATH="/home/allada/.bun/bin:$PATH"
+      source ~/.ssh/openai-key.sh || true
     '';
     ".config/Code/User/settings.json".text = ''
       {
@@ -93,3 +95,4 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
+
