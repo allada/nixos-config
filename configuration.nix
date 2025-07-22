@@ -22,7 +22,7 @@
     ./modules/packages.nix
     
     # Home manager
-    # inputs.home-manager.nixosModules.default
+    inputs.home-manager.nixosModules.default
   ];
 
   # Global Nix settings
