@@ -2,6 +2,6 @@
   # Docker configuration
   virtualisation.docker = {
     enable = true;
-    # Add additional Docker configuration here
+# Add additional Docker configuration here
   };
 }

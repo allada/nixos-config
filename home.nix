@@ -54,11 +54,28 @@
         }
       }
     '';
-
     ".vimrc".text = ''
       syntax on
       set mouse-=a
     '';
+    "global_vpn.sh" = {
+      text = ''
+        #!/bin/env bash
+        set -e
+
+        if (( EUID != 0 )); then
+          echo "Error: This script must be run with sudo or as root." >&2
+          exit 1
+        fi
+
+        exec openvpn \
+            --config /root/nixos/openvpn/express.conf \
+            --auth-user-pass /root/nixos/openvpn/auth.txt \
+            --writepid /run/global-vpnspace-openvpn.pid
+      '';
+      executable = true;
+    };
+
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
