@@ -104,12 +104,23 @@
   #
   #  /etc/profiles/per-user/allada/etc/profile.d/hm-session-vars.sh
   #
+
   home.sessionVariables = {
-    # EDITOR = "emacs";
     PKG_CONFIG_PATH = "/run/current-system/sw/lib/pkgconfig";
+  };
+
+  xdg = {
+    enable = true;
+    mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "inode/directory" = [ "nemo.desktop" ];
+        "application/x-directory" = [ "nemo.desktop" ];
+        "application/x-gnome-saved-search" = [ "nemo.desktop" ];
+      };
+    };
   };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
-

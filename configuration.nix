@@ -28,6 +28,7 @@
   # Global Nix settings
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+
   # Home manager configuration
   home-manager = {
     extraSpecialArgs = { inherit inputs; };

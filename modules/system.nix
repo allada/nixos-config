@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
   # Timezone and locale
-  time.timeZone = "Asia/HongKong";
+  time.timeZone = "America/Chicago";
   
   i18n = {
     defaultLocale = "en_US.UTF-8";
@@ -23,6 +23,28 @@
     ledger.enable = true;
   };
 
+hardware.graphics = {
+  enable = true;
+  extraPackages = with pkgs; [
+    vulkan-loader
+    vulkan-validation-layers
+  ];
+};  
+# (use hardware.opengl.enable = true; on older releases)
+
+  services.xserver.videoDrivers = [ "nvidia" ];
+
+  hardware.nvidia = {
+    modesetting.enable = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    open = false; # set explicitly if you need proprietary vs open module behavior
+    nvidiaSettings = true;
+  };
+
+  environment.sessionVariables = {
+    LD_LIBRARY_PATH = "/run/opengl-driver/lib";
+  };
+
   # Security and permissions
   security.rtkit.enable = true;
   programs.fuse.userAllowOther = true;
@@ -31,6 +53,18 @@
   services = {
     locate.enable = true;
     printing.enable = true;
+    fail2ban.enable = true;
+  };
+
+  services.openssh = {
+    enable = true;
+    ports = [ 2222 ];
+    settings = {
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+      PermitRootLogin = "no";
+      AllowUsers = [ "allada" ];
+    };
   };
 
   # Development environment
@@ -44,10 +78,14 @@
       xorg.libxcb
       xorg.libXi
       libxkbcommon
+      vulkan-loader
       libz
     ];
   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  # Allow unfree packages + enable CUDA support where available
+  nixpkgs.config = {
+    allowUnfree = true;
+    cudaSupport = true;
+  };
 }

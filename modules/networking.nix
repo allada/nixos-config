@@ -3,14 +3,20 @@
 {
   networking = {
     hostName = "nixos";
+    hostId = "f42de4d4";
     networkmanager.enable = true;
     
     # Firewall configuration
     firewall = {
       enable = true;
       # Add specific ports here as needed
-      # allowedTCPPorts = [ ... ];
-      # allowedUDPPorts = [ ... ];
+      allowedTCPPortRanges = [
+        { from = 4000; to = 4010; }
+        { from = 2222; to = 2222; }
+      ];
+      allowedUDPPortRanges = [
+        { from = 4000; to = 4010; }
+      ];
     };
   };
 
