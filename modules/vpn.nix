@@ -92,7 +92,7 @@ let
 
       openvpnConfigFile = mkOption {
         type = types.str;
-        default = "/etc/nixos/openvpn/${name}.conf";
+        default = "/etc/openvpn/${name}.conf";
         description = "Path to the OpenVPN config file.";
       };
 

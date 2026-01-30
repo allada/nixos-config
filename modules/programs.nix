@@ -1,11 +1,11 @@
 { config, pkgs, ... }: {
-  # System programs
   programs = {
+    # System programs
     firefox.enable = true;
-    
     # adb.enable = true;
 
-    # Development tools
-    nm-applet.enable = true;
+    # Shell tooling
+    direnv.enable = true;
+    direnv.nix-direnv.enable = true;
   };
 }

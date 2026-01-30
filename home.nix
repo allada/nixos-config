@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -39,42 +39,6 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    ".bashrc".text = ''
-      alias bazel=bazelisk
-      alias k=kubectl
-      export PATH="/home/allada/.bun/bin:$PATH"
-      source ~/.ssh/openai-key.sh || true
-    '';
-    ".config/Code/User/settings.json".text = ''
-      {
-        "editor.inlayHints.enabled": "offUnlessPressed",
-        "editor.tabSize": 2,
-        "files.associations": {
-          "*.json5": "jsonc"
-        }
-      }
-    '';
-    ".vimrc".text = ''
-      syntax on
-      set mouse-=a
-    '';
-    "global_vpn.sh" = {
-      text = ''
-        #!/bin/env bash
-        set -e
-
-        if (( EUID != 0 )); then
-          echo "Error: This script must be run with sudo or as root." >&2
-          exit 1
-        fi
-
-        exec openvpn \
-            --config /root/nixos/openvpn/express.conf \
-            --auth-user-pass /root/nixos/openvpn/auth.txt \
-            --writepid /run/global-vpnspace-openvpn.pid
-      '';
-      executable = true;
-    };
 
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
@@ -87,6 +51,21 @@
     #   org.gradle.daemon.idletimeout=3600000
     # '';
   };
+
+  home.activation.linkSharedHomeFiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    set -euo pipefail
+
+    homeDir="${config.home.homeDirectory}"
+    src="/etc/nixos/home-files"
+
+    mkdir -p "''${homeDir}/.config"
+    rm -rf "''${homeDir}/.config/Code"
+    ln -s "''${src}/.config/Code" "''${homeDir}/.config/Code"
+
+    ln -sfn "''${src}/.bashrc" "''${homeDir}/.bashrc"
+    ln -sfn "''${src}/.vimrc" "''${homeDir}/.vimrc"
+    ln -sfn "''${src}/global_vpn.sh" "''${homeDir}/global_vpn.sh"
+  '';
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a

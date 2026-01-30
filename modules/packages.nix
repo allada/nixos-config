@@ -54,12 +54,27 @@ let
     };
   });
 
-  # Package categories for better organization
-  developmentTools = with pkgs; [
-    git vim
-    nodejs_24 pnpm yarn bun
-    gh
+  # Package groups
+  devTools = with pkgs; [
+    git
+    vim
     tmux
+    gh
+    nodejs_24
+    pnpm
+    yarn
+    bun
+    go
+    rustup
+    gcc14
+    lld
+    pkg-config
+    pre-commit
+    bazelisk
+    bazel-buildtools
+    remarshal_0_17
+    claude-code
+    postgresql
     (python312.withPackages (ps: with ps; [
       pandas
       web3
@@ -85,34 +100,38 @@ let
       pyarrow
       tqdm
     ]))
-    remarshal_0_17
-    go rustup
-    gcc14 lld pkg-config
-    pre-commit
-    bazelisk bazel-buildtools
-    claude-code
-    postgresql
   ];
 
   containerTools = with pkgs; [
-    docker nvidia-docker
-    kubectl kubectx kubernetes-helm
+    docker
+    nvidia-docker
+    kubectl
+    kubectx
+    kubernetes-helm
   ];
 
   networkingTools = with pkgs; [
-    openvpn dante socat
-    net-tools killall
-    wget curl
+    openvpn
+    dante
+    socat
+    net-tools
+    killall
+    wget
+    curl
   ];
 
   monitoringTools = with pkgs; [
-    htop nmon nload iftop
+    htop
+    nmon
+    nload
+    iftop
   ];
 
-  desktopApplications = with pkgs; [
+  desktopApps = with pkgs; [
     discord
-    google-chrome firefox
-    slack spotify
+    google-chrome
+    slack
+    spotify
     terminator
     ledger-live-desktop
     libreoffice
@@ -125,7 +144,8 @@ let
 
   filesystemTools = with pkgs; [
     inotify-tools
-    fuse fuse3
+    fuse
+    fuse3
   ];
 
   databaseTools = with pkgs; [
@@ -136,25 +156,29 @@ let
     jq
     openssl
     mktemp
-    lz4 zstd
+    lz4
+    zstd
   ];
 
+  gpuTools = with pkgs; [
+    rocmPackages.llvm.clang
+    cudaPackagesCudnn8.cudatoolkit
+    cudaPackagesCudnn8.cudnn
+  ];
 in
 {
-  environment.systemPackages = 
-    developmentTools ++
+  environment.systemPackages =
+    devTools ++
     containerTools ++
     networkingTools ++
     monitoringTools ++
-    desktopApplications ++
+    desktopApps ++
     cloudTools ++
     filesystemTools ++
     databaseTools ++
     utilityTools ++
+    gpuTools ++
     [
       vscodeWithExtensions
-      pkgs.rocmPackages.llvm.clang
-      cudaPackagesCudnn8.cudatoolkit
-      cudaPackagesCudnn8.cudnn
     ];
 }

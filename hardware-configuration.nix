@@ -26,6 +26,8 @@
 
   swapDevices = [ ];
 
+  networking.hostId = "f42de4d4";
+
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
@@ -35,4 +37,37 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  boot.supportedFilesystems = [ "zfs" ];
+
+  hardware.bluetooth.enable = true;
+
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      vulkan-loader
+      vulkan-validation-layers
+    ];
+  };
+
+  services.xserver.videoDrivers = [ "nvidia" ];
+
+  hardware.nvidia = {
+    modesetting.enable = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    open = false;
+    nvidiaSettings = true;
+  };
+
+  boot.extraModprobeConfig = ''
+    options zfs zfs_arc_max=8589934592
+  '';
+
+  boot.zfs.extraPools = [ "tank" ];
+
+  services.zfs = {
+    autoScrub.enable = true;
+    trim.enable = true;
+    autoSnapshot.enable = false;
+  };
 }
