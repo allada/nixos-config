@@ -59,8 +59,9 @@
     src="/etc/nixos/home-files"
 
     mkdir -p "''${homeDir}/.config"
-    rm -rf "''${homeDir}/.config/Code"
-    ln -s "''${src}/.config/Code" "''${homeDir}/.config/Code"
+    rm -rf "''${homeDir}/.config/Code/User/settings.json"
+    mkdir -p "''${homeDir}/.config/Code/User"
+    ln -s "''${src}/.config/Code/User/settings.json" "''${homeDir}/.config/Code/User/settings.json"
 
     ln -sfn "''${src}/.bashrc" "''${homeDir}/.bashrc"
     ln -sfn "''${src}/.vimrc" "''${homeDir}/.vimrc"

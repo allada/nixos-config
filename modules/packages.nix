@@ -17,15 +17,8 @@ let
       ms-vscode-remote.remote-containers
       ms-kubernetes-tools.vscode-kubernetes-tools
       redhat.vscode-yaml
-      # anthropic.claude-code
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       # Custom extensions
-      {
-        name = "claude-code";
-        publisher = "Anthropic";
-        version = "2.0.55";
-        sha256 = "sha256-j5yeFtbaW0UVrchKOcqBO60ay9PuPDS4jQzz+GN+56U=";
-      }
       {
         name = "hardhat-solidity";
         publisher = "NomicFoundation";
@@ -60,46 +53,7 @@ let
     vim
     tmux
     gh
-    nodejs_24
-    pnpm
-    yarn
-    bun
-    go
-    rustup
-    gcc14
-    lld
-    pkg-config
-    pre-commit
-    bazelisk
-    bazel-buildtools
-    remarshal_0_17
-    claude-code
     postgresql
-    (python312.withPackages (ps: with ps; [
-      pandas
-      web3
-      numpy
-      matplotlib
-      xlsxwriter
-      openpyxl
-      scipy
-      clickhouse
-      clickhouse-connect
-      clickhouse-driver
-      requests
-      google-auth
-      google-api-python-client
-      (torch.override {
-        cudaSupport = true;
-        cudaPackages = cudaPackagesCudnn8;
-        gpuTargets = [ "6.1" ];
-      })
-      scikit-learn
-      boto3
-      lz4
-      pyarrow
-      tqdm
-    ]))
   ];
 
   containerTools = with pkgs; [
@@ -112,7 +66,6 @@ let
 
   networkingTools = with pkgs; [
     openvpn
-    dante
     socat
     net-tools
     killall
@@ -133,7 +86,6 @@ let
     slack
     spotify
     terminator
-    ledger-live-desktop
     libreoffice
     nemo
   ];
