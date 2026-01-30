@@ -5,6 +5,7 @@
     hostName = "nixos";
     hostId = "f42de4d4";
     networkmanager.enable = true;
+    enableIPv6 = false;
     
     # Firewall configuration
     firewall = {
