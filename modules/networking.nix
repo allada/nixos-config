@@ -13,6 +13,7 @@
       allowedTCPPortRanges = [
         { from = 4000; to = 4010; }
         { from = 2222; to = 2222; }
+        { from = 7710; to = 7710; }
       ];
       allowedUDPPortRanges = [
         { from = 4000; to = 4010; }

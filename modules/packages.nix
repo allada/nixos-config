@@ -53,6 +53,8 @@ let
     vim
     tmux
     gh
+    bun
+    codex
     postgresql
   ];
 

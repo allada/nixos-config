@@ -7,6 +7,6 @@ if (( EUID != 0 )); then
 fi
 
 exec openvpn \
-    --config /etc/openvpn/us.conf \
+    --config /etc/openvpn/jp.conf \
     --auth-user-pass /etc/nixos/secrets/vpn/auth.txt \
     --writepid /run/global-vpnspace-openvpn.pid
