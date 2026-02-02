@@ -4,5 +4,6 @@
   "files.associations": {
     "*.json5": "jsonc"
   },
-  "files.simpleDialog.enable": true
+  "files.simpleDialog.enable": true,
+  "redhat.telemetry.enabled": false
 }
